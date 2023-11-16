@@ -7,10 +7,10 @@ class InvoiceAdmin(admin.ModelAdmin):
     search_fields= ['Name', 'Phone_Number', 'id']
     list_filter= ['DateTime', 'id'] 
     
-@admin.register(transaction)
-class TransactionAdmin(admin.ModelAdmin):
-    list_display= ['id', 'Name', 'phone_number']
+@admin.register(Creditor_debtor_accounts)
+class Creditor_debtor_accountAdmin(admin.ModelAdmin):
+    list_display= ['id', 'Name', 'Phone_Number']
     list_display_links= ['id', 'Name']
     search_fields= ['Name', 'Phone_Number', 'id']
-    list_filter= ['DateTime', 'id'] 
-admin.site.register(Creditor_debtor_accounts)
+    list_filter= ['id'] 
+admin.site.register(transaction)

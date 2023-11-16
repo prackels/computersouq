@@ -14,7 +14,7 @@ class invoice(models.Model):
     Phone_Number = models.CharField('Phone', max_length=11, validators=[RegexValidator(r'^\d{1,11}$'), MinLengthValidator(11)])
     Products = models.ManyToManyField(Categories)
     Quantity= models.IntegerField(default= 1)
-    Ram= models.IntegerField(validators=[MaxValueValidator(128)])
+    Ram= models.IntegerField(validators=[MaxValueValidator(138)])
     DateTime = models.DateTimeField(default= datetime.now())
     Slug= models.SlugField
     Payment= models.CharField(max_length=50,choices= Payments)
@@ -30,14 +30,16 @@ class Creditor_debtor_accounts(models.Model):
     id = models.AutoField(primary_key=True)
     Name= models.CharField(max_length=100)
     Phone_Number= models.CharField('Phone', max_length=11, validators=[RegexValidator(r'^\d{1,11}$'), MinLengthValidator(11)])
-    address= models.CharField(max_length=500, verbose_name= "العنوان و اسم المكان")
+    address= models.CharField(max_length=500, verbose_name="العنوان و اسم المكان")
     def __str__(self):
         return self.Name
-class transaction(Creditor_debtor_accounts):
+class transaction(models.Model):
     account= models.ForeignKey(Creditor_debtor_accounts, on_delete= models.CASCADE)
     Products = models.ManyToManyField(Categories)
-    creditor = models.FloatField(verbose_name= "دائن")
-    debitor = models.FloatField(verbose_name= "مدين")
-    amount= models.FloatField(verbose_name= "السعر الكلي")
+    creditor = models.DecimalField(max_digits=8, decimal_places=3, verbose_name="دائن")
+    debitor = models.DecimalField(max_digits=8, decimal_places=3, verbose_name="مدين")
+    amount= models.DecimalField(max_digits=8, decimal_places=3, verbose_name="السعر الكلي")
+    DateTime = models.DateTimeField(default= datetime.now())
+
     def __str__(self):
         return self.account.Name
